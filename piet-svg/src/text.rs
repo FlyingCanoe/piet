@@ -90,6 +90,11 @@ impl piet::TextLayout for TextLayout {
         unimplemented!();
     }
 
+    #[allow(clippy::unimplemented)]
+    fn line_number(&self, _text_position: usize) -> Option<usize> {
+        unimplemented!()
+    }
+
     fn hit_test_point(&self, _point: Point) -> HitTestPoint {
         unimplemented!()
     }

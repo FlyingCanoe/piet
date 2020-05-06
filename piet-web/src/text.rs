@@ -179,6 +179,21 @@ impl TextLayout for WebTextLayout {
         self.line_metrics.len()
     }
 
+    fn line_number(&self, text_position: usize) -> Option<usize> {
+        self.line_metrics
+            .iter()
+            .enumerate()
+            .find_map(|(line_number, line_metric)| {
+                if text_position >= line_metric.start_offset
+                    || text_position < line_metric.end_offset
+                {
+                    Some(line_number)
+                } else {
+                    None
+                }
+            })
+    }
+
     fn hit_test_point(&self, point: Point) -> HitTestPoint {
         // internal logic is using grapheme clusters, but return the text position associated
         // with the border of the grapheme cluster.

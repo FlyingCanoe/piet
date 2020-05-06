@@ -195,6 +195,10 @@ impl TextLayout for NullTextLayout {
         0
     }
 
+    fn line_number(&self, _text_position: usize) -> Option<usize> {
+        None
+    }
+
     fn hit_test_point(&self, _point: Point) -> HitTestPoint {
         HitTestPoint::default()
     }

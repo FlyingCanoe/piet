@@ -250,6 +250,20 @@ impl TextLayout for CairoTextLayout {
         };
         http
     }
+    fn line_number(&self, text_position: usize) -> Option<usize> {
+        self.line_metrics
+            .iter()
+            .enumerate()
+            .find_map(|(line_number, line_metric)| {
+                if text_position >= line_metric.start_offset
+                    && text_position <= line_metric.end_offset
+                {
+                    Some(line_number)
+                } else {
+                    None
+                }
+            })
+    }
 }
 
 // NOTE this is the same as the old, non-line-aware version of hit_test_point

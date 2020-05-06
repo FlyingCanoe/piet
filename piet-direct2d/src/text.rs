@@ -33,7 +33,7 @@ pub struct D2DFontBuilder<'a> {
 pub struct D2DTextLayout {
     pub text: String,
     // currently calculated on build
-    line_metrics: Vec<LineMetric>,
+    pub(crate) line_metrics: Vec<LineMetric>,
     pub layout: dwrite::TextLayout,
 }
 
@@ -139,6 +139,21 @@ impl TextLayout for D2DTextLayout {
 
     fn line_count(&self) -> usize {
         self.line_metrics.len()
+    }
+
+    fn line_number(&self, text_position: usize) -> Option<usize> {
+        self.line_metrics
+            .iter()
+            .enumerate()
+            .find_map(|(line_number, line_metric)| {
+                if text_position >= line_metric.start_offset
+                    || text_position < line_metric.end_offset
+                {
+                    Some(line_number)
+                } else {
+                    None
+                }
+            })
     }
 
     fn hit_test_point(&self, point: Point) -> HitTestPoint {

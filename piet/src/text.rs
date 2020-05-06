@@ -91,6 +91,8 @@ pub trait TextLayout: Clone {
     /// Returns total number of lines in the text layout.
     fn line_count(&self) -> usize;
 
+    fn line_number(&self, text_position: usize) -> Option<usize>;
+
     /// Given a `Point`, determine the corresponding text position.
     ///
     /// ## Return value:
